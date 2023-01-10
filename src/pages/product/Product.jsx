@@ -1,15 +1,12 @@
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Header from "../../components/headerbar/Header";
-import "./product.scss";
 import config from "../../config.json";
-import axios from "axios";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-
 const Product = () => {
   const accesstoken = JSON.parse(localStorage.getItem("user"));
   const [products, setProducts] = useState([]);
-
   const navigate = useNavigate();
   const getProductData = async () => {
     axios
@@ -29,7 +26,6 @@ const Product = () => {
   useEffect(() => {
     getProductData();
   }, []);
-
   return (
     <>
       <div class="min-height-300 bg-primary position-absolute w-100"></div>
@@ -47,8 +43,14 @@ const Product = () => {
                     </div>
 
                     <div class="col-6 text-end">
-                      {/* <a href="javascript:void(0);" class="btn btn-outline-primary btn-sm mb-0 "  >Import</a> &nbsp;&nbsp; */}
-                      <a class="btn bg-gradient-dark mb-0" href="/product/add">
+                      {/* <a
+                        href="javascript:void(0);"
+                        class="btn btn-outline-primary btn-sm mb-0 "
+                      >
+                        Import
+                      </a>{" "} */}
+                      &nbsp;&nbsp;
+                      <a class="btn bg-gradient-dark mb-0" href="/products/add">
                         <i class="fas fa-plus" aria-hidden="true"></i>
                         &nbsp;&nbsp;Add New Product
                       </a>
@@ -62,41 +64,90 @@ const Product = () => {
                       <thead>
                         <tr>
                           <th class="text-secondary opacity-7 ps-2">S.No</th>
-                          {/* <th class="text-secondary opacity-7 ps-2">Name</th> */}
+                          <th class="text-secondary opacity-7 ps-2">
+                            Product Name
+                          </th>
                           <th class="text-secondary opacity-7">
-                            Product Details
+                            Product Description
                           </th>
                           <th class="text-secondary opacity-7 ps-2">
-                            Min_Amount
-                          </th>
-                          <th class="text-secondary opacity-7 ps-2">
-                            Max_Amount
+                            Product Reamrk
                           </th>
                           <th class="text-secondary opacity-7 ps-2">
                             Duration
                           </th>
+                          <th class="text-secondary opacity-7 ps-2">
+                            Installment
+                          </th>
+                          <th class="text-secondary opacity-7 ps-2">
+                            Min_Amount
+                          </th>
+
+                          <th class="text-secondary opacity-7 ps-2">
+                            Max-Amount
+                          </th>
                           <th class="text-secondary opacity-7 ps-2">Status</th>
-                          {/* <th class="text-secondary opacity-7 ps-2">Action</th> */}
                         </tr>
                       </thead>
                       <tbody>
                         {products.map((item, index) => (
                           <tr key={item._id}>
                             <td>{index + 1}</td>
+                            {/* <td>
+                              <div class="d-flex px-2 py-1">
+                                <div class="d-flex flex-column justify-content-center">
+                                  <h6 class="mb-1 text-sm ">{item.rowid}</h6>
+                                </div>
+                              </div>
+                            </td> */}
                             <td>
                               <div class="d-flex px-2 py-1">
                                 <div class="d-flex flex-column justify-content-center">
                                   <h6 class="mb-1 text-sm ">
                                     {item.product_name}
                                   </h6>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="d-flex px-2 py-1">
+                                <div class="d-flex flex-column justify-content-center">
                                   <p class="text-xs mb-2">
-                                    Product Desc:
-                                    {item.product_desc}
+                                    <span class="text-dark font-weight-bold ms-sm-2">
+                                      {item.product_desc}
+                                    </span>
                                   </p>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="d-flex px-2 py-1">
+                                <div class="d-flex flex-column justify-content-center">
                                   <p class="text-xs mb-2">
-                                    Product Remark:
-                                    <span class="text-secondary">
+                                    <span class="text-dark font-weight-bold ms-sm-2">
                                       {item.product_remark}
+                                    </span>
+                                  </p>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="d-flex px-2 py-1">
+                                <div class="d-flex flex-column justify-content-center">
+                                  <p class="text-xs mb-2">
+                                    <span class="text-dark font-weight-bold ms-sm-2">
+                                      {item.duration}
+                                    </span>
+                                  </p>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="d-flex px-2 py-1">
+                                <div class="d-flex flex-column justify-content-center">
+                                  <p class="text-xs mb-2">
+                                    <span class="text-dark font-weight-bold ms-sm-2">
+                                      {item.installment}
                                     </span>
                                   </p>
                                 </div>
@@ -119,17 +170,6 @@ const Product = () => {
                                   <p class="text-xs mb-2">
                                     <span class="text-dark font-weight-bold ms-sm-2">
                                       {item.max_amount}
-                                    </span>
-                                  </p>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              <div class="d-flex px-2 py-1">
-                                <div class="d-flex flex-column justify-content-center">
-                                  <p class="text-xs mb-2">
-                                    <span class="text-dark font-weight-bold ms-sm-2">
-                                      {item.duration}
                                     </span>
                                   </p>
                                 </div>

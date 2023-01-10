@@ -1,15 +1,15 @@
 import Sidebar from "../../components/sidebar/Sidebar";
 import Header from "../../components/headerbar/Header";
-import "./scheme.scss";
+// import "./product.scss";
 import config from "../../config.json";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Category = () => {
+const Scheme = () => {
   const accesstoken = JSON.parse(localStorage.getItem("user"));
   const [schemes, setSchemes] = useState([]);
-  const [error, setError] = useState("");
+
   const navigate = useNavigate();
   const getSchemeData = async () => {
     axios
@@ -38,18 +38,27 @@ const Category = () => {
         <Header />
         <div class="container-fluid py-4">
           <div class="row">
-            <div class="col-md-8">
+            <div class="col-12">
               <div class="card mb-4">
                 <div class="card-header pb-3">
                   <div class="row">
                     <div class="col-6 d-flex align-items-center">
-                      <h6 class="mb-0">Scheme</h6>
+                      <h6 class="mb-0">Schemes</h6>
                     </div>
 
-                    {/* <div class="col-6 text-end">
-                                    <a href="javascript:void(0);" class="btn btn-outline-primary btn-sm mb-0 "  >Import</a> &nbsp;&nbsp;
-                                    <a href="/category/add" class="btn btn-outline-primary btn-sm mb-0 ">Add New</a>
-                                </div> */}
+                    <div class="col-6 text-end">
+                      {/* <a
+                        href="javascript:void(0);"
+                        class="btn btn-outline-primary btn-sm mb-0 "
+                      >
+                        Import
+                      </a>{" "} */}
+                      &nbsp;&nbsp;
+                      <a class="btn bg-gradient-dark mb-0" href="/scheme/add">
+                        <i class="fas fa-plus" aria-hidden="true"></i>
+                        &nbsp;&nbsp;Add New Scheme
+                      </a>
+                    </div>
                   </div>
                 </div>
 
@@ -59,96 +68,71 @@ const Category = () => {
                       <thead>
                         <tr>
                           <th class="text-secondary opacity-7 ps-2">S.No</th>
+                          {/* <th class="text-secondary opacity-7 ps-2">Name</th> */}
+                          {/* <th class="text-secondary opacity-7">Row ID</th> */}
                           <th class="text-secondary opacity-7 ps-2">Product</th>
-                          <th class="text-secondary opacity-7">Duration</th>
-                          <th class="text-secondary opacity-7">Amount</th>
+                          <th class="text-secondary opacity-7 ps-2">
+                            Duration
+                          </th>
+                          <th class="text-secondary opacity-7 ps-2">Amount</th>
+                          <th class="text-secondary opacity-7 ps-2">Status</th>
                         </tr>
                       </thead>
                       <tbody>
                         {schemes.map((item, index) => (
                           <tr key={item._id}>
                             <td>{index + 1}</td>
+                            {/* <td>
+                              <div class="d-flex px-2 py-1">
+                                <div class="d-flex flex-column justify-content-center">
+                                  <h6 class="mb-1 text-sm ">{item.rowid}</h6>
+                                </div>
+                              </div>
+                            </td> */}
                             <td>
                               <div class="d-flex px-2 py-1">
                                 <div class="d-flex flex-column justify-content-center">
-                                  <h6 class="mb-0 text-sm">{item.product}</h6>
+                                  <h6 class="mb-1 text-sm ">{item.product}</h6>
                                 </div>
                               </div>
                             </td>
                             <td>
                               <div class="d-flex px-2 py-1">
                                 <div class="d-flex flex-column justify-content-center">
-                                  <h6 class="mb-0 text-sm">{item.duration}</h6>
+                                  <p class="text-xs mb-2">
+                                    <span class="text-dark font-weight-bold ms-sm-2">
+                                      {item.duration}
+                                    </span>
+                                  </p>
                                 </div>
                               </div>
                             </td>
                             <td>
-                              <div class="ms-auto">
-                                <a class="btn btn-link text-dark px-3 mb-0">
-                                  <i
-                                    class="fas fa-pencil-alt text-dark me-2"
-                                    aria-hidden="true"
-                                  ></i>
-                                  Edit
-                                </a>
-                                {/* <a class="btn btn-link text-danger text-gradient px-3 mb-0" onClick={()=> deleteCategory(item._id)}><i class="far fa-trash-alt me-2" aria-hidden="true"></i>Delete</a> */}
+                              <div class="d-flex px-2 py-1">
+                                <div class="d-flex flex-column justify-content-center">
+                                  <p class="text-xs mb-2">
+                                    <span class="text-dark font-weight-bold ms-sm-2">
+                                      {item.amount}
+                                    </span>
+                                  </p>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="d-flex px-2 py-1">
+                                <div class="d-flex flex-column justify-content-center">
+                                  <p class="text-xs mb-2">
+                                    <span class="text-dark font-weight-bold ms-sm-2">
+                                      {item.status}
+                                    </span>
+                                  </p>
+                                </div>
                               </div>
                             </td>
                           </tr>
                         ))}
                       </tbody>
                     </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card mb-4">
-                <div class="card-header pb-3">
-                  <div class="row">
-                    <div class="col-6 d-flex align-items-center">
-                      <h6 class="mb-0">Add/Edit Scheme</h6>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label
-                          for="example-text-input"
-                          class="form-control-label"
-                        >
-                          Product
-                        </label>
-                        <input
-                          class="form-control"
-                          type="text"
-                          placeholder="Enter Scheme name"
-                          required
-                          value={schemes}
-                          onChange={(e) => {
-                            setSchemes(e.target.value);
-                          }}
-                        />
-                        {error && !schemes && (
-                          <span class="text-danger text-gradient text-xs text-secondary">
-                            Enter the Scheme Name
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="text-end">
-                      <button
-                        type="button"
-                        class="btn btn-primary btn-sm ms-auto mt-5"
-                      >
-                        Submit
-                      </button>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -160,4 +144,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default Scheme;

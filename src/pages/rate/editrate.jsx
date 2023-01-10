@@ -1,38 +1,41 @@
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Header from "../../components/headerbar/Header";
-import "./scheme.scss";
-import config from "../../config.json";
 import TextField from "@mui/material/TextField";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-
-import axios from "axios";
-
-const SchemeAdd = () => {
+import config from "../../config.json";
+const RateEdit = () => {
   const accesstoken = JSON.parse(localStorage.getItem("user"));
-  // const [userid, setUserid] = useState("");
-  // const [product, setProduct] = useState("");
-  const [duration, setDuration] = useState("");
-  const [amount, setAmount] = useState("");
-  const [status, setStatus] = useState("");
+  const { editid } = useParams();
+  const [rate, setRate] = useState(null);
+  useEffect(() => {
+    fetch(config.apiurl + `/api/rate/` + { editid })
+      .then((data) => data.json())
+      .then((rt) => setRate(rt));
+  }, [editid]);
+
+  const [rowid, setRowId] = useState("");
+  const [type, setType] = useState("");
+  const [rates, setRates] = useState("");
+  const [statuss, setStatuss] = useState("");
+
   const navigate = useNavigate();
-  function addScheme() {
-    const newScheme = {
-      // userid,
-      // product,
-      amount,
-      duration,
-      status,
+  const editRates = () => {
+    const updatedRate = {
+      rowid,
+      type,
+      rates,
+      statuss,
     };
-    fetch(config.apiurl + "/api/scheme/", {
-      method: "POST",
-      body: JSON.stringify(newScheme),
+    console.log(updatedRate);
+    fetch(config.apiurl + "/api/rate/" + editid, {
+      method: "PUT",
+      body: JSON.stringify(updatedRate),
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + accesstoken.data.access_token,
       },
-    }).then(() => navigate("/scheme"));
-  }
+    }).then(() => navigate("/rate"));
+  };
 
   return (
     <>
@@ -47,37 +50,19 @@ const SchemeAdd = () => {
                 <div class="card-header pb-3">
                   <div class="row">
                     <div class="col-6 d-flex align-items-center">
-                      <h6 class="mb-0">Add Scheme</h6>
+                      <h6 class="mb-0">Edit Rate</h6>
                     </div>
                   </div>
                 </div>
 
                 <div class="card-body">
-                  <p class="text-uppercase text-sm">Scheme Information</p>
+                  <p class="text-uppercase text-sm">Rate Information</p>
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
-                        {/* <TextField
-                          onChange={(event) => setUserid(event.target.value)}
-                          label="UserId"
-                          variant="outlined"
-                        /> */}
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        {/* <TextField
-                          onChange={(event) => setProduct(event.target.value)}
-                          label="Product"
-                          variant="outlined"
-                        /> */}
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
                         <TextField
-                          onChange={(event) => setAmount(event.target.value)}
-                          label="Amount"
+                          onChange={(event) => setRowId(event.target.value)}
+                          label="RowID"
                           variant="outlined"
                         />
                       </div>
@@ -85,8 +70,8 @@ const SchemeAdd = () => {
                     <div class="col-md-6">
                       <div class="form-group">
                         <TextField
-                          onChange={(event) => setDuration(event.target.value)}
-                          label="Duration"
+                          onChange={(event) => setRates(event.target.value)}
+                          label="Rate"
                           variant="outlined"
                         />
                       </div>
@@ -94,7 +79,16 @@ const SchemeAdd = () => {
                     <div class="col-md-6">
                       <div class="form-group">
                         <TextField
-                          onChange={(event) => setStatus(event.target.value)}
+                          onChange={(event) => setType(event.target.value)}
+                          label="Type"
+                          variant="outlined"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <TextField
+                          onChange={(event) => setStatuss(event.target.value)}
                           label="Status"
                           variant="outlined"
                         />
@@ -106,7 +100,7 @@ const SchemeAdd = () => {
                       <button
                         type="button"
                         class="btn btn-primary btn-sm ms-auto mt-5"
-                        onClick={addScheme}
+                        onClick={editRates}
                       >
                         Submit
                       </button>
@@ -122,4 +116,4 @@ const SchemeAdd = () => {
   );
 };
 
-export default SchemeAdd;
+export default RateEdit;

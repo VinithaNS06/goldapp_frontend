@@ -4,25 +4,21 @@ import Header from "../../components/headerbar/Header";
 import config from "../../config.json";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-const Appoinment = () => {
+const Transaction = () => {
   const accesstoken = JSON.parse(localStorage.getItem("user"));
-  const [appointmentsInfo, setAppointmentsInfo] = useState([]);
+  const [payments, setPayments] = useState([]);
   const params = useParams();
   const navigate = useNavigate();
 
-  const getAppointmentsData = async () => {
+  const getPaymentsData = async () => {
     axios
-      .get(
-        config.apibaseurl +
-          "/api/schedule/all?startDate=2022-11-11&endDate=2022-12-12&status=Pending",
-        {
-          headers: {
-            Authorization: "Bearer " + accesstoken.data.access_token,
-          },
-        }
-      )
+      .get(config.apiurl + "/api/payment", {
+        headers: {
+          Authorization: "Bearer " + accesstoken.data.access_token,
+        },
+      })
       .then((res) => {
-        setAppointmentsInfo(res.data.data);
+        setPayments(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -30,7 +26,7 @@ const Appoinment = () => {
   };
 
   useEffect(() => {
-    getAppointmentsData();
+    getPaymentsData();
   }, []);
 
   return (
@@ -46,7 +42,7 @@ const Appoinment = () => {
                 <div class="card-header pb-3">
                   <div class="row">
                     <div class="col-6 d-flex align-items-center">
-                      <h6 class="mb-0">Appointment</h6>
+                      <h6 class="mb-0">Transaction</h6>
                     </div>
                   </div>
                 </div>
@@ -67,16 +63,16 @@ const Appoinment = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {appointmentsInfo.map((item, index) => (
+                        {payments.map((item, index) => (
                           <tr key={item._id}>
                             <td>{index + 1}</td>
                             <td>
                               <div class="d-flex px-2 py-1">
                                 <div class="d-flex flex-column justify-content-center">
                                   <h6 class="mb-1 text-sm ">
-                                    {item.user_id.name}
+                                    {item.transaction_id}
                                   </h6>
-                                  <p class="text-xs mb-2">
+                                  {/* <p class="text-xs mb-2">
                                     Email: {item.user_id.email}
                                   </p>
                                   <p class="text-xs mb-2">
@@ -84,7 +80,7 @@ const Appoinment = () => {
                                     <span class="text-secondary">
                                       {item.user_id.phone}
                                     </span>
-                                  </p>
+                                  </p> */}
                                 </div>
                               </div>
                             </td>
@@ -93,14 +89,14 @@ const Appoinment = () => {
                                 <div class="d-flex flex-column justify-content-center">
                                   <p class="text-xs mb-2">
                                     <span class="text-dark font-weight-bold ms-sm-2">
-                                      {item.date}
+                                      {item.date_on}
                                     </span>
                                   </p>
-                                  <p class="text-xs mb-2">
+                                  {/* <p class="text-xs mb-2">
                                     <span class="text-dark font-weight-bold ms-sm-2">
                                       {item.time}
                                     </span>
-                                  </p>
+                                  </p> */}
                                 </div>
                               </div>
                             </td>
@@ -110,13 +106,24 @@ const Appoinment = () => {
                                 <div class="d-flex flex-column justify-content-center">
                                   <p class="text-xs mb-2">
                                     <span class="text-dark font-weight-bold ms-sm-2">
-                                      {item.schedule_status}
+                                      {item.scheme}
                                     </span>
                                   </p>
                                 </div>
                               </div>
                             </td>
                             <td>
+                              <div class="d-flex px-2 py-1">
+                                <div class="d-flex flex-column justify-content-center">
+                                  <p class="text-xs mb-2">
+                                    <span class="text-dark font-weight-bold ms-sm-2">
+                                      {item.amount}
+                                    </span>
+                                  </p>
+                                </div>
+                              </div>
+                            </td>
+                            {/* <td>
                               <div class="ms-auto">
                                 <a
                                   href={"/appointment/view/" + item._id}
@@ -129,7 +136,7 @@ const Appoinment = () => {
                                   View
                                 </a>
                               </div>
-                            </td>
+                            </td> */}
                           </tr>
                         ))}
                       </tbody>
@@ -145,4 +152,4 @@ const Appoinment = () => {
   );
 };
 
-export default Appoinment;
+export default Transaction;

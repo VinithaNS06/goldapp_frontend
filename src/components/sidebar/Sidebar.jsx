@@ -38,19 +38,20 @@ const Sidebar = () => {
             </Link>
           </li>
           <li class="nav-item">
+            <Link class="nav-link m-0" to="/products">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="fa fa-product-hunt text-warning text-sm opacity-10"></i>
+              </div>
+
+              <span class="nav-link-text ms-1">Product</span>
+            </Link>
+          </li>
+          <li class="nav-item">
             <Link class="nav-link m-0" to="/scheme">
               <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                 <i class="fa fa-money text-warning text-sm opacity-10"></i>
               </div>
               <span class="nav-link-text ms-1">Scheme</span>
-            </Link>
-          </li>
-          <li class="nav-item">
-            <Link class="nav-link m-0" to="/product">
-              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                <i class="fa fa-product-hunt text-warning text-sm opacity-10"></i>
-              </div>
-              <span class="nav-link-text ms-1">Product</span>
             </Link>
           </li>
 
@@ -72,7 +73,7 @@ const Sidebar = () => {
           </li>
 
           <li class="nav-item">
-            <Link class="nav-link m-0" to="/appointment">
+            <Link class="nav-link m-0" to="/transaction">
               <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                 <i class="fa fa-google-wallet text-warning text-sm opacity-10"></i>
               </div>

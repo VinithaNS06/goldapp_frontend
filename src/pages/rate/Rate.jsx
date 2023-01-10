@@ -46,13 +46,19 @@ const Rate = () => {
                       <h6 class="mb-0">Rates</h6>
                     </div>
 
-                    {/* <div class="col-6 text-end">
-                      <a href="javascript:void(0);" class="btn btn-outline-primary btn-sm mb-0 "  >Import</a> &nbsp;&nbsp;
-                      <a class="btn bg-gradient-dark mb-0" href="/product/add">
+                    <div class="col-6 text-end">
+                      {/* <a
+                        href="javascript:void(0);"
+                        class="btn btn-outline-primary btn-sm mb-0 "
+                      >
+                        Import
+                      </a>{" "} */}
+                      &nbsp;&nbsp;
+                      <a class="btn bg-gradient-dark mb-0" href="/rate/add">
                         <i class="fas fa-plus" aria-hidden="true"></i>
-                        &nbsp;&nbsp;Add New Product
+                        &nbsp;&nbsp;Add New Rate
                       </a>
-                    </div>  */}
+                    </div>
                   </div>
                 </div>
 
@@ -67,6 +73,7 @@ const Rate = () => {
                           <th class="text-secondary opacity-7 ps-2">Type</th>
                           <th class="text-secondary opacity-7 ps-2">Rate</th>
                           <th class="text-secondary opacity-7 ps-2">Status</th>
+                          <th class="text-secondary opacity-7 ps-2">Action</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -107,6 +114,20 @@ const Rate = () => {
                                     </span>
                                   </p>
                                 </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="ms-auto">
+                                <a
+                                  class="btn btn-link text-dark px-3 mb-0"
+                                  onClick={() => navigate("/rate/edit/")}
+                                >
+                                  <i
+                                    class="fas fa-pencil-alt text-dark me-2"
+                                    aria-hidden="true"
+                                  ></i>
+                                  Edit
+                                </a>
                               </div>
                             </td>
                           </tr>

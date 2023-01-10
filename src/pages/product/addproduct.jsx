@@ -1,18 +1,45 @@
+import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Header from "../../components/headerbar/Header";
-import "./product.scss";
+import TextField from "@mui/material/TextField";
+import axios from "axios";
 import config from "../../config.json";
-
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import axios from "axios";
-
-const Productadd = () => {
+const ProductAdd = () => {
   const accesstoken = JSON.parse(localStorage.getItem("user"));
-  const [products, setProducts] = useState("");
-  const [error, setError] = useState("");
-  const [product_id, setProduct_id] = useState("");
+  const [product_id, setProductId] = useState("");
+  const [product_name, setProductName] = useState("");
+  const [product_desc, setProductDesc] = useState("");
+  const [product_remark, setProductRemark] = useState("");
+  const [duration, setDuration] = useState("");
+  const [installment, setInstallMent] = useState("");
+  const [min_amount, setMinAmount] = useState("");
+  const [max_amount, setMaxAmount] = useState("");
+  //   const [status, setStatus] = useState("");
+  const navigate = useNavigate();
+  function addProduct() {
+    const newProduct = {
+      product_id,
+      product_name,
+      product_desc,
+      product_remark,
+      duration,
+      installment,
+      min_amount,
+      max_amount,
+    };
+    console.log(newProduct);
+    fetch(config.apiurl + "/api/products/", {
+      method: "POST",
+      body: JSON.stringify(newProduct),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accesstoken.data.access_token,
+      },
+    }).then(() => navigate("/products"));
+  }
+
   return (
     <>
       <div class="min-height-300 bg-primary position-absolute w-100"></div>
@@ -36,89 +63,100 @@ const Productadd = () => {
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label for="product name" class="form-control-label">
-                          Product Name
-                        </label>
-                        <input
-                          class="form-control"
-                          type="text"
-                          value="product"
+                        <TextField
+                          onChange={(event) => setProductId(event.target.value)}
+                          label="ProductId"
+                          variant="outlined"
                         />
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label
-                          for="example-text-input"
-                          class="form-control-label"
-                        >
-                          Product Description
-                        </label>
-                        <input class="form-control" type="text" value="" />
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label
-                          for="example-text-input"
-                          class="form-control-label"
-                        >
-                          Product Remark
-                        </label>
-                        <input class="form-control" type="text" value="" />
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="minamount" class="form-control-label">
-                          Min Amount
-                        </label>
-                        <input
-                          class="form-control"
-                          type="number"
-                          value="minamount"
+                        <TextField
+                          onChange={(event) =>
+                            setProductName(event.target.value)
+                          }
+                          label="Productname"
+                          variant="outlined"
                         />
                       </div>
                     </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label
-                        for="example-text-input"
-                        class="form-control-label"
-                      >
-                        Max Amount
-                      </label>
-                      <input class="form-control" type="number" value="" />
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <TextField
+                          onChange={(event) =>
+                            setProductDesc(event.target.value)
+                          }
+                          label="ProductDesc"
+                          variant="outlined"
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label
-                        for="example-text-input"
-                        class="form-control-label"
-                      >
-                        Duration
-                      </label>
-                      <input class="form-control" type="number" value="" />
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <TextField
+                          onChange={(event) =>
+                            setProductRemark(event.target.value)
+                          }
+                          label="ProductRemark"
+                          variant="outlined"
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label
-                        for="example-text-input"
-                        class="form-control-label"
-                      >
-                        Status
-                      </label>
-                      <input class="form-control" type="number" value="" />
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <TextField
+                          onChange={(event) => setDuration(event.target.value)}
+                          label="Duration"
+                          variant="outlined"
+                        />
+                      </div>
                     </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <TextField
+                          onChange={(event) =>
+                            setInstallMent(event.target.value)
+                          }
+                          label="Installment"
+                          variant="outlined"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <TextField
+                          onChange={(event) => setMinAmount(event.target.value)}
+                          label="MinAmount"
+                          variant="outlined"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <TextField
+                          onChange={(event) => setMaxAmount(event.target.value)}
+                          label="MaxAmount"
+                          variant="outlined"
+                        />
+                      </div>
+                    </div>
+                    {/* <div class="col-md-6">
+                      <div class="form-group">
+                        <TextField
+                          onChange={(event) => setStatus(event.target.value)}
+                          label="Status"
+                          variant="outlined"
+                        />
+                      </div>
+                    </div> */}
                   </div>
                   <div class="row">
                     <div class="text-end">
                       <button
                         type="button"
                         class="btn btn-primary btn-sm ms-auto mt-5"
+                        onClick={addProduct}
                       >
                         Submit
                       </button>
@@ -134,4 +172,4 @@ const Productadd = () => {
   );
 };
 
-export default Productadd;
+export default ProductAdd;
