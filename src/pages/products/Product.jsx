@@ -65,28 +65,32 @@ const Product = () => {
                         <tr>
                           <th class="text-secondary opacity-7 ps-2">S.No</th>
                           <th class="text-secondary opacity-7 ps-2">
-                            Product Name
+                            Scheme Name
                           </th>
-                          <th class="text-secondary opacity-7">
+                          {/* <th class="text-secondary opacity-7">
                             Product Description
-                          </th>
+                          </th> */}
                           <th class="text-secondary opacity-7 ps-2">
-                            Product Reamrk
+                            Scheme Code
                           </th>
                           <th class="text-secondary opacity-7 ps-2">
                             Duration
                           </th>
+                          {/* <th class="text-secondary opacity-7 ps-2">Grams</th>
+                          <th class="text-secondary opacity-7 ps-2">Rate</th>
                           <th class="text-secondary opacity-7 ps-2">
                             Installment
-                          </th>
-                          <th class="text-secondary opacity-7 ps-2">
-                            Min_Amount
-                          </th>
+                          </th> */}
+                          <th class="text-secondary opacity-7 ps-2">Amount</th>
 
-                          <th class="text-secondary opacity-7 ps-2">
+                          {/* <th class="text-secondary opacity-7 ps-2">
                             Max-Amount
-                          </th>
+                          </th> */}
+                          {/* <th class="text-secondary opacity-7 ps-2">
+                            Amount Step Up
+                          </th> */}
                           <th class="text-secondary opacity-7 ps-2">Status</th>
+                          <th class="text-secondary opacity-7 ps-2">Action</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -109,7 +113,7 @@ const Product = () => {
                                 </div>
                               </div>
                             </td>
-                            <td>
+                            {/* <td>
                               <div class="d-flex px-2 py-1">
                                 <div class="d-flex flex-column justify-content-center">
                                   <p class="text-xs mb-2">
@@ -119,13 +123,13 @@ const Product = () => {
                                   </p>
                                 </div>
                               </div>
-                            </td>
+                            </td> */}
                             <td>
                               <div class="d-flex px-2 py-1">
                                 <div class="d-flex flex-column justify-content-center">
                                   <p class="text-xs mb-2">
                                     <span class="text-dark font-weight-bold ms-sm-2">
-                                      {item.product_remark}
+                                      {item.scheme_code}
                                     </span>
                                   </p>
                                 </div>
@@ -142,6 +146,28 @@ const Product = () => {
                                 </div>
                               </div>
                             </td>
+                            {/* <td>
+                              <div class="d-flex px-2 py-1">
+                                <div class="d-flex flex-column justify-content-center">
+                                  <p class="text-xs mb-2">
+                                    <span class="text-dark font-weight-bold ms-sm-2">
+                                      {item.grams}
+                                    </span>
+                                  </p>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="d-flex px-2 py-1">
+                                <div class="d-flex flex-column justify-content-center">
+                                  <p class="text-xs mb-2">
+                                    <span class="text-dark font-weight-bold ms-sm-2">
+                                      {item.rate}
+                                    </span>
+                                  </p>
+                                </div>
+                              </div>
+                            </td>
                             <td>
                               <div class="d-flex px-2 py-1">
                                 <div class="d-flex flex-column justify-content-center">
@@ -152,19 +178,19 @@ const Product = () => {
                                   </p>
                                 </div>
                               </div>
-                            </td>
+                            </td> */}
                             <td>
                               <div class="d-flex px-2 py-1">
                                 <div class="d-flex flex-column justify-content-center">
                                   <p class="text-xs mb-2">
                                     <span class="text-dark font-weight-bold ms-sm-2">
-                                      {item.min_amount}
+                                      {item.min_amount} - {item.max_amount}
                                     </span>
                                   </p>
                                 </div>
                               </div>
                             </td>
-                            <td>
+                            {/* <td>
                               <div class="d-flex px-2 py-1">
                                 <div class="d-flex flex-column justify-content-center">
                                   <p class="text-xs mb-2">
@@ -174,7 +200,18 @@ const Product = () => {
                                   </p>
                                 </div>
                               </div>
-                            </td>
+                            </td> */}
+                            {/* <td>
+                              <div class="d-flex px-2 py-1">
+                                <div class="d-flex flex-column justify-content-center">
+                                  <p class="text-xs mb-2">
+                                    <span class="text-dark font-weight-bold ms-sm-2">
+                                      {item.amountstepup}
+                                    </span>
+                                  </p>
+                                </div>
+                              </div>
+                            </td> */}
                             <td>
                               <div class="d-flex px-2 py-1">
                                 <div class="d-flex flex-column justify-content-center">
@@ -184,6 +221,22 @@ const Product = () => {
                                     </span>
                                   </p>
                                 </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="ms-auto">
+                                <a
+                                  class="btn btn-link text-dark px-3 mb-0"
+                                  onClick={() =>
+                                    navigate(`/products/edit/${item._id}`)
+                                  }
+                                >
+                                  <i
+                                    class="fas fa-pencil-alt text-dark me-2"
+                                    aria-hidden="true"
+                                  ></i>
+                                  Edit
+                                </a>
                               </div>
                             </td>
                           </tr>

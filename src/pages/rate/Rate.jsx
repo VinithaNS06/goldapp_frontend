@@ -120,7 +120,9 @@ const Rate = () => {
                               <div class="ms-auto">
                                 <a
                                   class="btn btn-link text-dark px-3 mb-0"
-                                  onClick={() => navigate("/rate/edit/")}
+                                  onClick={() =>
+                                    navigate(`/rate/edit/${item._id}`)
+                                  }
                                 >
                                   <i
                                     class="fas fa-pencil-alt text-dark me-2"

@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Header from "../../components/headerbar/Header";
-import TextField from "@mui/material/TextField";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import config from "../../config.json";
 import { useNavigate } from "react-router-dom";
 const RateAdd = () => {
   const accesstoken = JSON.parse(localStorage.getItem("user"));
-  const [Raterowid, setRowId] = useState("");
+  // const [Raterowid, setRowId] = useState("");
   const [rate, setRate] = useState("");
   const [type, setType] = useState("");
   const [status, setStatus] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   function addRate() {
     const newRate = {
-      Raterowid,
       rate,
       type,
       status,
@@ -26,7 +28,13 @@ const RateAdd = () => {
         "Content-Type": "application/json",
         Authorization: "Bearer " + accesstoken.data.access_token,
       },
-    }).then(() => navigate("/rate"));
+    })
+      .then(() => toast("Rate Created Sucessfully"))
+      .then(() =>
+        setTimeout(() => {
+          navigate("/rate");
+        }, 5000)
+      );
   }
 
   return (
@@ -46,53 +54,85 @@ const RateAdd = () => {
                     </div>
                   </div>
                 </div>
-
                 <div class="card-body">
-                  <p class="text-uppercase text-sm">Rate Information</p>
                   <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                       <div class="form-group">
-                        <TextField
-                          onChange={(event) => setRowId(event.target.value)}
-                          label="RowID"
-                          variant="outlined"
+                        <label
+                          for="example-text-input"
+                          class="form-control-label"
+                        >
+                          Rate
+                        </label>
+                        <input
+                          class="form-control"
+                          type="text"
+                          value={rate}
+                          onChange={(e) => {
+                            setRate(e.target.value);
+                          }}
                         />
+                        {error && !rate && (
+                          <span class="text-danger text-gradient text-xs text-secondary">
+                            Enter the Rate
+                          </span>
+                        )}
                       </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                       <div class="form-group">
-                        <TextField
-                          onChange={(event) => setRate(event.target.value)}
-                          label="Rate"
-                          variant="outlined"
+                        <label
+                          for="example-text-input"
+                          class="form-control-label"
+                        >
+                          Type
+                        </label>
+                        <input
+                          class="form-control"
+                          type="text"
+                          value={type}
+                          onChange={(e) => {
+                            setType(e.target.value);
+                          }}
                         />
+                        {error && !type && (
+                          <span class="text-danger text-gradient text-xs text-secondary">
+                            Enter the Type
+                          </span>
+                        )}
                       </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                       <div class="form-group">
-                        <TextField
-                          onChange={(event) => setType(event.target.value)}
-                          label="Type"
-                          variant="outlined"
+                        <label
+                          for="example-text-input"
+                          class="form-control-label"
+                        >
+                          Status
+                        </label>
+                        <input
+                          class="form-control"
+                          type="text"
+                          value={status}
+                          onChange={(e) => {
+                            setStatus(e.target.value);
+                          }}
                         />
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <TextField
-                          onChange={(event) => setStatus(event.target.value)}
-                          label="Status"
-                          variant="outlined"
-                        />
+                        {error && !status && (
+                          <span class="text-danger text-gradient text-xs text-secondary">
+                            Enter the Status
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>
+                  <ToastContainer />
                   <div class="row">
                     <div class="text-end">
                       <button
                         type="button"
-                        class="btn btn-primary btn-sm ms-auto mt-5"
                         onClick={addRate}
+                        class="btn btn-primary btn-sm ms-auto mt-5"
                       >
                         Submit
                       </button>

@@ -2,41 +2,59 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Header from "../../components/headerbar/Header";
-import TextField from "@mui/material/TextField";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import config from "../../config.json";
 const RateEdit = () => {
   const accesstoken = JSON.parse(localStorage.getItem("user"));
-  const { editid } = useParams();
-  const [rate, setRate] = useState(null);
-  useEffect(() => {
-    fetch(config.apiurl + `/api/rate/` + { editid })
-      .then((data) => data.json())
-      .then((rt) => setRate(rt));
-  }, [editid]);
-
-  const [rowid, setRowId] = useState("");
-  const [type, setType] = useState("");
-  const [rates, setRates] = useState("");
-  const [statuss, setStatuss] = useState("");
-
+  // const [rateid, setRateId] = useState("");
+  const [type, setRateType] = useState("");
+  const [rate, setRate] = useState("");
+  const [status, setStatus] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
-  const editRates = () => {
-    const updatedRate = {
-      rowid,
-      type,
-      rates,
-      statuss,
-    };
-    console.log(updatedRate);
-    fetch(config.apiurl + "/api/rate/" + editid, {
-      method: "PUT",
-      body: JSON.stringify(updatedRate),
+  const params = useParams();
+  useEffect(() => {
+    // updateRate();
+    getRateView();
+  }, []);
+  const updateRate = async () => {
+    const headers = {
+      method: "put",
       headers: {
         "Content-Type": "application/json",
+        Authorization: "bearer " + accesstoken.data.access_token,
       },
-    }).then(() => navigate("/rate"));
+      body: JSON.stringify({
+        type: type,
+        rate: rate,
+        status: status,
+      }),
+    };
+    fetch(config.apiurl + `/api/rate/${params.id}`, headers)
+      .then(() => toast("Rate Updated Sucessfully"))
+      .then(() =>
+        setTimeout(() => {
+          navigate("/rate");
+        }, 5000)
+      );
   };
 
+  const getRateView = async () => {
+    let RateDetails = await fetch(config.apiurl + `/api/rate/${params.id}`, {
+      method: "get",
+      headers: {
+        Authorization: "bearer " + accesstoken.data.access_token,
+      },
+    });
+    RateDetails = await RateDetails.json();
+    // console.log(RateDetails);
+    // setRateId(RateDetails.data[0]._id);
+    setRateType(RateDetails.data[0].type);
+    setRate(RateDetails.data[0].rate);
+    setStatus(RateDetails.data[0].status);
+    // getProductvalue(schemeDetails.data[0].products);
+  };
   return (
     <>
       <div class="min-height-300 bg-primary position-absolute w-100"></div>
@@ -54,53 +72,85 @@ const RateEdit = () => {
                     </div>
                   </div>
                 </div>
-
                 <div class="card-body">
-                  <p class="text-uppercase text-sm">Rate Information</p>
                   <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                       <div class="form-group">
-                        <TextField
-                          onChange={(event) => setRowId(event.target.value)}
-                          label="RowID"
-                          variant="outlined"
+                        <label
+                          for="example-text-input"
+                          class="form-control-label"
+                        >
+                          Rate
+                        </label>
+                        <input
+                          class="form-control"
+                          type="text"
+                          value={rate}
+                          onChange={(e) => {
+                            setRate(e.target.value);
+                          }}
                         />
+                        {error && !rate && (
+                          <span class="text-danger text-gradient text-xs text-secondary">
+                            Enter the Rate
+                          </span>
+                        )}
                       </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                       <div class="form-group">
-                        <TextField
-                          onChange={(event) => setRates(event.target.value)}
-                          label="Rate"
-                          variant="outlined"
+                        <label
+                          for="example-text-input"
+                          class="form-control-label"
+                        >
+                          Type
+                        </label>
+                        <input
+                          class="form-control"
+                          type="text"
+                          value={type}
+                          onChange={(e) => {
+                            setRateType(e.target.value);
+                          }}
                         />
+                        {error && !type && (
+                          <span class="text-danger text-gradient text-xs text-secondary">
+                            Enter the Type
+                          </span>
+                        )}
                       </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                       <div class="form-group">
-                        <TextField
-                          onChange={(event) => setType(event.target.value)}
-                          label="Type"
-                          variant="outlined"
+                        <label
+                          for="example-text-input"
+                          class="form-control-label"
+                        >
+                          Status
+                        </label>
+                        <input
+                          class="form-control"
+                          type="text"
+                          value={status}
+                          onChange={(e) => {
+                            setStatus(e.target.value);
+                          }}
                         />
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <TextField
-                          onChange={(event) => setStatuss(event.target.value)}
-                          label="Status"
-                          variant="outlined"
-                        />
+                        {error && !status && (
+                          <span class="text-danger text-gradient text-xs text-secondary">
+                            Enter the Status
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>
+                  <ToastContainer />
                   <div class="row">
                     <div class="text-end">
                       <button
                         type="button"
+                        onClick={updateRate}
                         class="btn btn-primary btn-sm ms-auto mt-5"
-                        onClick={editRates}
                       >
                         Submit
                       </button>

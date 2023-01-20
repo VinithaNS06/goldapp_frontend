@@ -12,7 +12,7 @@ const Transaction = () => {
 
   const getPaymentsData = async () => {
     axios
-      .get(config.apiurl + "/api/payment", {
+      .get(config.apiurl + `/api/payment/scheme/${params.id}`, {
         headers: {
           Authorization: "Bearer " + accesstoken.data.access_token,
         },
@@ -53,13 +53,13 @@ const Transaction = () => {
                       <thead>
                         <tr>
                           <th class="text-secondary opacity-7 ps-2">S.No</th>
-                          {/* <th class="text-secondary opacity-7 ps-2">Name</th> */}
-                          <th class="text-secondary opacity-7">User Details</th>
+                          <th class="text-secondary opacity-7">Grams</th>
                           <th class="text-secondary opacity-7 ps-2">
                             Date&Time
                           </th>
+                          <th class="text-secondary opacity-7 ps-2">Amount</th>
                           <th class="text-secondary opacity-7 ps-2">Status</th>
-                          <th class="text-secondary opacity-7 ps-2">Action</th>
+                          {/* <th class="text-secondary opacity-7 ps-2">Action</th> */}
                         </tr>
                       </thead>
                       <tbody>
@@ -69,18 +69,7 @@ const Transaction = () => {
                             <td>
                               <div class="d-flex px-2 py-1">
                                 <div class="d-flex flex-column justify-content-center">
-                                  <h6 class="mb-1 text-sm ">
-                                    {item.transaction_id}
-                                  </h6>
-                                  {/* <p class="text-xs mb-2">
-                                    Email: {item.user_id.email}
-                                  </p>
-                                  <p class="text-xs mb-2">
-                                    Mobile:
-                                    <span class="text-secondary">
-                                      {item.user_id.phone}
-                                    </span>
-                                  </p> */}
+                                  <h6 class="mb-1 text-sm ">{item.grams}</h6>
                                 </div>
                               </div>
                             </td>
@@ -92,26 +81,10 @@ const Transaction = () => {
                                       {item.date_on}
                                     </span>
                                   </p>
-                                  {/* <p class="text-xs mb-2">
-                                    <span class="text-dark font-weight-bold ms-sm-2">
-                                      {item.time}
-                                    </span>
-                                  </p> */}
                                 </div>
                               </div>
                             </td>
 
-                            <td>
-                              <div class="d-flex px-2 py-1">
-                                <div class="d-flex flex-column justify-content-center">
-                                  <p class="text-xs mb-2">
-                                    <span class="text-dark font-weight-bold ms-sm-2">
-                                      {item.scheme}
-                                    </span>
-                                  </p>
-                                </div>
-                              </div>
-                            </td>
                             <td>
                               <div class="d-flex px-2 py-1">
                                 <div class="d-flex flex-column justify-content-center">
@@ -123,17 +96,28 @@ const Transaction = () => {
                                 </div>
                               </div>
                             </td>
+                            <td>
+                              <div class="d-flex px-2 py-1">
+                                <div class="d-flex flex-column justify-content-center">
+                                  <p class="text-xs mb-2">
+                                    <span class="text-dark font-weight-bold ms-sm-2">
+                                      {item.status}
+                                    </span>
+                                  </p>
+                                </div>
+                              </div>
+                            </td>
                             {/* <td>
                               <div class="ms-auto">
                                 <a
-                                  href={"/appointment/view/" + item._id}
+                                  href={`/api/payment/scheme/` + item._id}
                                   class="btn btn-link text-dark px-3 mb-0"
                                 >
                                   <i
-                                    class="fa fa-eye-alt text-dark me-2"
+                                    class="fas fa-pencil-alt text-dark me-2"
                                     aria-hidden="true"
                                   ></i>
-                                  View
+                                  Edit
                                 </a>
                               </div>
                             </td> */}
